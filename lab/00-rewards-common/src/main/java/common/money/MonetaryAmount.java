@@ -10,7 +10,7 @@ import java.math.RoundingMode;
 
 /**
  * A representation of money.
- * 
+
  * A value object. Immutable.
  */
 @Embeddable
@@ -51,7 +51,7 @@ public class MonetaryAmount implements Serializable {
 	 * @return the monetary amount object
 	 */
 	public static MonetaryAmount valueOf(String string) {
-		if (string == null || string.length() == 0) {
+		if (string == null || string.isEmpty()) {
 			throw new IllegalArgumentException("The monetary amount value is required");
 		}
 		if (string.startsWith("$")) {

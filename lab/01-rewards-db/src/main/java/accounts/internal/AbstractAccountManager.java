@@ -11,7 +11,7 @@ public abstract class AbstractAccountManager implements AccountManager {
 
 	public AbstractAccountManager() {
 		logger = LoggerFactory.getLogger(getClass());
-		logger.info("Created " + getInfo() + " account-manager");
+        logger.info("Created {} account-manager", getInfo());
 	}
 
 	@Override

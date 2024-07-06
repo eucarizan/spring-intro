@@ -22,7 +22,7 @@ public class JdbcRewardRepository implements RewardRepository {
 
 	private static final Logger logger = LoggerFactory.getLogger("config");
 
-	private JdbcTemplate jdbcTemplate;
+	private final JdbcTemplate jdbcTemplate;
 
 	@Autowired
 	public JdbcRewardRepository(DataSource dataSource) {

@@ -7,16 +7,16 @@ import common.money.Percentage;
 
 /**
  * A summary of a monetary contribution made to an account that was distributed among the account's beneficiaries.
- * 
+
  * A value object. Immutable.
  */
 public class AccountContribution {
 
-	private String accountNumber;
+	private final String accountNumber;
 
-	private MonetaryAmount amount;
+	private final MonetaryAmount amount;
 
-	private Set<Distribution> distributions;
+	private final Set<Distribution> distributions;
 
 	/**
 	 * Creates a new account contribution.
@@ -71,18 +71,18 @@ public class AccountContribution {
 	/**
 	 * A single distribution made to a beneficiary as part of an account contribution, summarizing the distribution
 	 * amount and resulting total beneficiary savings.
-	 * 
+
 	 * A value object.
 	 */
 	public static class Distribution {
 
-		private String beneficiary;
+		private final String beneficiary;
 
-		private MonetaryAmount amount;
+		private final MonetaryAmount amount;
 
-		private Percentage percentage;
+		private final Percentage percentage;
 
-		private MonetaryAmount totalSavings;
+		private final MonetaryAmount totalSavings;
 
 		/**
 		 * Creates a new distribution.

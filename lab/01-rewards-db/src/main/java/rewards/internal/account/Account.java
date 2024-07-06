@@ -24,10 +24,10 @@ import common.money.Percentage;
 /**
  * An account for a member of the reward network. An account has one or more
  * beneficiaries whose allocations must add up to 100%.
- * 
+
  * An account can make contributions to its beneficiaries. Each contribution is
  * distributed among the beneficiaries based on an allocation.
- * 
+
  * An entity. An aggregate.
  */
 @Entity
@@ -47,7 +47,7 @@ public class Account {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ACCOUNT_ID")
-	private Set<Beneficiary> beneficiaries = new HashSet<Beneficiary>();
+	private Set<Beneficiary> beneficiaries = new HashSet<>();
 
 	protected Account() {
 	}
@@ -222,9 +222,7 @@ public class Account {
 	 * 
 	 * @param amount
 	 *            the total amount to contribute
-	 * @param contribution
-	 *            the contribution summary
-	 */
+     */
 	public AccountContribution makeContribution(MonetaryAmount amount) {
 		if (!isValid()) {
 			throw new IllegalStateException(
@@ -242,8 +240,8 @@ public class Account {
 	 * @return the individual beneficiary distributions
 	 */
 	private Set<Distribution> distribute(MonetaryAmount amount) {
-		Set<Distribution> distributions = new HashSet<Distribution>(
-				beneficiaries.size());
+		Set<Distribution> distributions = new HashSet<>(
+                beneficiaries.size());
 		for (Beneficiary beneficiary : beneficiaries) {
 			MonetaryAmount distributionAmount = amount.multiplyBy(beneficiary
 					.getAllocationPercentage());

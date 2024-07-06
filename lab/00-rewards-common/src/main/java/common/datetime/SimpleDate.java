@@ -57,7 +57,7 @@ public class SimpleDate implements Serializable {
 
 	/**
 	 * Returns this date in milliseconds since 1970.
-	 * @return
+	 * @return this date
 	 */
 	public long inMilliseconds() {
 		return asDate().getTime();
@@ -81,7 +81,7 @@ public class SimpleDate implements Serializable {
 	}
 
 	/**
-	 * Returns todays date. A convenient static factory method.
+	 * Returns today's date. A convenient static factory method.
 	 */
 	public static SimpleDate today() {
 		return new SimpleDate();
@@ -98,7 +98,7 @@ public class SimpleDate implements Serializable {
 
 	/**
 	 * Converts the specified long time value to a SimpleDate. Will trim hour, minute, second, and millisecond fields.
-	 * @param time time in millseconds since 1970
+	 * @param time time in milliseconds since 1970
 	 * @return the time as a SimpleDate
 	 */
 	public static SimpleDate valueOf(long time) {

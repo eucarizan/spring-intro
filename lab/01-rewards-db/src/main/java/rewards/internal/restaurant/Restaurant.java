@@ -18,7 +18,7 @@ import common.money.Percentage;
 
 /**
  * A restaurant establishment in the network. Like AppleBee's.
- * 
+
  * Restaurants calculate how much benefit may be awarded to an account for
  * dining based on an availability policy and a benefit percentage.
  */

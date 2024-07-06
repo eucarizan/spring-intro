@@ -14,10 +14,10 @@ import common.repository.Entity;
 /**
  * An account for a member of the reward network. An account has one or more beneficiaries whose allocations must add up
  * to 100%.
- * 
+
  * An account can make contributions to its beneficiaries. Each contribution is distributed among the beneficiaries
  * based on an allocation.
- * 
+
  * An entity. An aggregate.
  */
 public class Account extends Entity {
@@ -26,7 +26,7 @@ public class Account extends Entity {
 
 	private String name;
 
-	private Set<Beneficiary> beneficiaries = new HashSet<Beneficiary>();
+	private final Set<Beneficiary> beneficiaries = new HashSet<>();
 
 	@SuppressWarnings("unused")
 	private Account() {
@@ -81,11 +81,7 @@ public class Account extends Entity {
 		for (Beneficiary b : beneficiaries) {
 			totalPercentage = totalPercentage.add(b.getAllocationPercentage());
 		}
-		if (totalPercentage.equals(Percentage.oneHundred())) {
-			return true;
-		} else {
-			return false;
-		}
+        return totalPercentage.equals(Percentage.oneHundred());
 	}
 
 	/**
@@ -108,7 +104,7 @@ public class Account extends Entity {
 	 * @return the individual beneficiary distributions
 	 */
 	private Set<Distribution> distribute(MonetaryAmount amount) {
-		Set<Distribution> distributions = new HashSet<Distribution>(beneficiaries.size());
+		Set<Distribution> distributions = new HashSet<>(beneficiaries.size());
 		for (Beneficiary beneficiary : beneficiaries) {
 			MonetaryAmount distributionAmount = amount.multiplyBy(beneficiary.getAllocationPercentage());
 			beneficiary.credit(distributionAmount);

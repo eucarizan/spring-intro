@@ -7,22 +7,22 @@ import common.money.MonetaryAmount;
 
 /**
  * A dining event that occurred, representing a charge made to an credit card by a merchant on a specific date.
- * 
+
  * For a dining to be eligible for reward, the credit card number should map to an account in the reward network. In
  * addition, the merchant number should map to a restaurant in the network.
- * 
+
  * A value object. Immutable.
  */
 @SuppressWarnings("serial")
 public class Dining implements Serializable {
 
-	private MonetaryAmount amount;
+	private final MonetaryAmount amount;
 
-	private String creditCardNumber;
+	private final String creditCardNumber;
 
-	private String merchantNumber;
+	private final String merchantNumber;
 
-	private SimpleDate date;
+	private final SimpleDate date;
 
 	/**
 	 * Creates a new dining, reflecting an amount that was charged to a card by a merchant on the date specified.

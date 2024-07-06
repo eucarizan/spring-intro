@@ -20,7 +20,7 @@ public class StubAccountRepository implements AccountRepository {
 
 	public static final String TYPE = "Stub";
 
-	private Map<String, Account> accountsByCreditCard = new HashMap<String, Account>();
+	private final Map<String, Account> accountsByCreditCard = new HashMap<>();
 
 	public StubAccountRepository() {
 		Account account = new Account("123456789", "Keith and Keri Donald");

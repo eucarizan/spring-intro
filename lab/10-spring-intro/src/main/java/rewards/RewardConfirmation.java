@@ -6,9 +6,9 @@ package rewards;
  */
 public class RewardConfirmation {
 
-	private String confirmationNumber;
+	private final String confirmationNumber;
 
-	private AccountContribution accountContribution;
+	private final AccountContribution accountContribution;
 
 	/**
 	 * Creates a new reward confirmation.

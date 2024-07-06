@@ -14,13 +14,13 @@ public interface AccountRepository {
 	 * 
 	 * @return Implementation information.
 	 */
-	public String getInfo();
+    String getInfo();
 
 	/**
 	 * Load an account by its credit card.
 	 * @param creditCardNumber the credit card number
 	 * @return the account object
 	 */
-	public Account findByCreditCard(String creditCardNumber);
+    Account findByCreditCard(String creditCardNumber);
 
 }

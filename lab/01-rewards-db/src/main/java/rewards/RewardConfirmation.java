@@ -9,9 +9,9 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class RewardConfirmation implements Serializable {
 
-	private String confirmationNumber;
+	private final String confirmationNumber;
 
-	private AccountContribution accountContribution;
+	private final AccountContribution accountContribution;
 
 	/**
 	 * Creates a new reward confirmation.
