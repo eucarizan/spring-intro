@@ -15,6 +15,14 @@ import common.money.Percentage;
 /**
  * Loads accounts from a data source using the JDBC API.
  */
+
+/* TODO-05: Let this class to be found in component-scanning
+ * - Annotate the class with an appropriate stereotype annotation
+ *   to cause component-scan to detect and load this bean.
+ * - Inject dataSource by annotating setDataSource() method
+ *   with @Autowired.
+ */
+
 public class JdbcAccountRepository implements AccountRepository {
 
 	private DataSource dataSource;
@@ -28,14 +36,9 @@ public class JdbcAccountRepository implements AccountRepository {
 	}
 
 	public Account findByCreditCard(String creditCardNumber) {
-		
-		String sql = "select a.ID as ID, a.NUMBER as ACCOUNT_NUMBER, a.NAME as ACCOUNT_NAME, c.NUMBER as CREDIT_CARD_NUMBER, " +
-			"	b.NAME as BENEFICIARY_NAME, b.ALLOCATION_PERCENTAGE as BENEFICIARY_ALLOCATION_PERCENTAGE, b.SAVINGS as BENEFICIARY_SAVINGS " +
-			"from T_ACCOUNT a, T_ACCOUNT_CREDIT_CARD c " +
-			"left outer join T_ACCOUNT_BENEFICIARY b " +
-			"on a.ID = b.ACCOUNT_ID " +
-			"where c.ACCOUNT_ID = a.ID and c.NUMBER = ?";
-		
+
+		String sql = "select a.ID as ID, a.NUMBER as ACCOUNT_NUMBER, a.NAME as ACCOUNT_NAME, c.NUMBER as CREDIT_CARD_NUMBER, b.NAME as BENEFICIARY_NAME, b.ALLOCATION_PERCENTAGE as BENEFICIARY_ALLOCATION_PERCENTAGE, b.SAVINGS as BENEFICIARY_SAVINGS from T_ACCOUNT a, T_ACCOUNT_BENEFICIARY b, T_ACCOUNT_CREDIT_CARD c where ID = b.ACCOUNT_ID and ID = c.ACCOUNT_ID and c.NUMBER = ?";
+
 		Account account;
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -108,8 +111,9 @@ public class JdbcAccountRepository implements AccountRepository {
 	}
 
 	/**
-	 * Map the rows returned from the join of T_ACCOUNT and T_ACCOUNT_BENEFICIARY to an fully-reconstituted Account
-	 * aggregate.
+	 * Map the rows returned from the join of T_ACCOUNT and T_ACCOUNT_BENEFICIARY
+	 * to a fully-reconstituted Account aggregate.
+	 *
 	 * @param rs the set of rows returned from the query
 	 * @return the mapped Account aggregate
 	 * @throws SQLException an exception occurred extracting data from the result set
@@ -124,10 +128,7 @@ public class JdbcAccountRepository implements AccountRepository {
 				// set internal entity identifier (primary key)
 				account.setEntityId(rs.getLong("ID"));
 			}
-			Beneficiary b = mapBeneficiary(rs);
-			if (b != null) {
-				account.restoreBeneficiary(b);
-			}
+			account.restoreBeneficiary(mapBeneficiary(rs));
 		}
 		if (account == null) {
 			// no rows returned - throw an empty result exception
@@ -138,16 +139,13 @@ public class JdbcAccountRepository implements AccountRepository {
 
 	/**
 	 * Maps the beneficiary columns in a single row to an AllocatedBeneficiary object.
+	 *
 	 * @param rs the result set with its cursor positioned at the current row
 	 * @return an allocated beneficiary
 	 * @throws SQLException an exception occurred extracting data from the result set
 	 */
 	private Beneficiary mapBeneficiary(ResultSet rs) throws SQLException {
 		String name = rs.getString("BENEFICIARY_NAME");
-		if (name == null) {
-			// apparently no beneficiary for this 
-			return null;
-		}		
 		MonetaryAmount savings = MonetaryAmount.valueOf(rs.getString("BENEFICIARY_SAVINGS"));
 		Percentage allocationPercentage = Percentage.valueOf(rs.getString("BENEFICIARY_ALLOCATION_PERCENTAGE"));
 		return new Beneficiary(name, allocationPercentage, savings);

@@ -9,9 +9,18 @@ import javax.sql.DataSource;
 import java.sql.*;
 
 /**
- * JDBC implementation of a reward repository that records the result of a reward transaction by inserting a reward
- * confirmation record.
+ * JDBC implementation of a reward repository that
+ * records the result of a reward transaction by
+ * inserting a reward confirmation record.
  */
+
+/* TODO-04: Let this class to be found in component-scanning
+ * - Annotate the class with an appropriate stereotype annotation
+ *   to cause component-scanning to detect and load this bean.
+ * - Inject dataSource by annotating setDataSource() method
+ *   with @Autowired.
+ */
+
 public class JdbcRewardRepository implements RewardRepository {
 
 	private DataSource dataSource;

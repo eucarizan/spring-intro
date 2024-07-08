@@ -15,3 +15,8 @@
 - Specifying the dependency relationships among beans
 - Injecting dependencies through constructor injection
 - Creating Spring application context in the test code (WITHOUT using Spring testContext framework)
+
+# annotations
+- Refactoring the current code that uses Spring configuration with @Bean methods so that it uses annotation and component-scanning instead
+- Using constructor injection and setter injection
+- Using @PostConstruct and @PreDestroy

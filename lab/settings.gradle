@@ -5,4 +5,4 @@
 rootProject.name = 'parentProject'
 include(':00-rewards-common')
 include(':01-rewards-db')
-include(':12-javaconfig-dependency-injection')
+include(':16-annotations')

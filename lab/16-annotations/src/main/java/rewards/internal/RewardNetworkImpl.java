@@ -1,6 +1,5 @@
 package rewards.internal;
 
-import common.money.MonetaryAmount;
 import rewards.AccountContribution;
 import rewards.Dining;
 import rewards.RewardConfirmation;
@@ -11,6 +10,8 @@ import rewards.internal.restaurant.Restaurant;
 import rewards.internal.restaurant.RestaurantRepository;
 import rewards.internal.reward.RewardRepository;
 
+import common.money.MonetaryAmount;
+
 /**
  * Rewards an Account for Dining at a Restaurant.
 
@@ -18,8 +19,15 @@ import rewards.internal.reward.RewardRepository;
  * the domain-layer to carry out the process of rewarding benefits to accounts for dining.
 
  * Said in other words, this class implements the "reward account for dining" use case.
- *
  */
+
+/* TODO-03: Let this class to be found in component-scanning
+ * - Annotate this class with an appropriate stereotype annotation
+ *   to cause component-scanning to create a Spring bean from this class.
+ * - Inject all 3 dependencies.  Decide if you should use field
+ *   injection or constructor injection.
+ */
+
 public class RewardNetworkImpl implements RewardNetwork {
 
 	private final AccountRepository accountRepository;
@@ -44,11 +52,9 @@ public class RewardNetworkImpl implements RewardNetwork {
 	public RewardConfirmation rewardAccountFor(Dining dining) {
 		Account account = accountRepository.findByCreditCard(dining.getCreditCardNumber());
 		Restaurant restaurant = restaurantRepository.findByMerchantNumber(dining.getMerchantNumber());
-
-		MonetaryAmount monetaryAmount = restaurant.calculateBenefitFor(account, dining);
-		AccountContribution accountContribution = account.makeContribution(monetaryAmount);
+		MonetaryAmount amount = restaurant.calculateBenefitFor(account, dining);
+		AccountContribution contribution = account.makeContribution(amount);
 		accountRepository.updateBeneficiaries(account);
-
-		return rewardRepository.confirmReward(accountContribution, dining);
+		return rewardRepository.confirmReward(contribution, dining);
 	}
 }
