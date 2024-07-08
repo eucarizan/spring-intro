@@ -2,7 +2,6 @@ package rewards.internal;
 
 import common.money.MonetaryAmount;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import rewards.AccountContribution;
 import rewards.Dining;
@@ -40,7 +39,7 @@ public class RewardNetworkImplTests {
 		RestaurantRepository restaurantRepo = new StubRestaurantRepository();
 		RewardRepository rewardRepo = new StubRewardRepository();
 
-		// Setup the object being tested by handing what it needs to work
+		// Set up the object being tested by handing what it needs to work
 		rewardNetwork = new RewardNetworkImpl(accountRepo, restaurantRepo, rewardRepo);
 	}
 
