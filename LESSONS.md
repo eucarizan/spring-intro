@@ -3,6 +3,7 @@
 - [lessons](#lessons)
   - [spring intro](#spring-intro)
   - [javaconfig dependency injection](#javaconfig-dependency-injection)
+  - [annotations](#annotations)
 
 # spring intro
 - Understanding internal operations that need to be performed to implement "rewardAccountFor" method of the "RewardNetworkImpl" class
