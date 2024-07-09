@@ -127,6 +127,21 @@ public class Account extends Entity {
 	}
 
 	/**
+	 * Returns a single account beneficiary. Callers should not attempt to hold on or modify the returned object. This
+	 * method should only be used transitively; for example, called to facilitate reporting or testing.
+	 * @param name the name of the beneficiary e.g "Annabelle"
+	 * @return the beneficiary object
+	 */
+	public Beneficiary getBeneficiary(String name) {
+		for (Beneficiary b : beneficiaries) {
+			if (b.getName().equals(name)) {
+				return b;
+			}
+		}
+		throw new IllegalArgumentException("No such beneficiary with name '" + name + "'");
+	}
+
+	/**
 	 * Used to restore an allocated beneficiary. Should only be called by the repository responsible for reconstituting
 	 * this account.
 	 * @param beneficiary the beneficiary

@@ -3,6 +3,8 @@ package rewards.internal;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import rewards.internal.restaurant.Restaurant;
@@ -23,6 +25,8 @@ public class StubRestaurantRepository implements RestaurantRepository {
 	private final Map<String, Restaurant> restaurantsByMerchantNumber = new HashMap<>();
 
 	public StubRestaurantRepository() {
+		Logger logger = LoggerFactory.getLogger(getClass());
+		logger.info("Creating {}", getClass().getSimpleName());
 		Restaurant restaurant = new Restaurant("1234567890", "Apple Bees");
 		restaurant.setBenefitPercentage(Percentage.valueOf("8%"));
 		restaurantsByMerchantNumber.put(restaurant.getNumber(), restaurant);

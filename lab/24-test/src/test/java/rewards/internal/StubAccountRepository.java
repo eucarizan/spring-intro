@@ -3,6 +3,8 @@ package rewards.internal;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import rewards.internal.account.Account;
@@ -23,6 +25,8 @@ public class StubAccountRepository implements AccountRepository {
 	private final Map<String, Account> accountsByCreditCard = new HashMap<>();
 
 	public StubAccountRepository() {
+		Logger logger = LoggerFactory.getLogger(getClass());
+		logger.info("Creating {}", getClass().getSimpleName());
 		Account account = new Account("123456789", "Keith and Keri Donald");
 		account.addBeneficiary("Annabelle", Percentage.valueOf("50%"));
 		account.addBeneficiary("Corgan", Percentage.valueOf("50%"));

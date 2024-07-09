@@ -7,6 +7,8 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 
@@ -18,10 +20,15 @@ import org.springframework.stereotype.Repository;
  * Loads accounts from a data source using the JDBC API.
  */
 
-@Repository("accountRepository")
+@Repository
 public class JdbcAccountRepository implements AccountRepository {
 
-	private DataSource dataSource;
+    private DataSource dataSource;
+
+	public JdbcAccountRepository() {
+        Logger logger = LoggerFactory.getLogger(getClass());
+        logger.info("Creating {}", getClass().getSimpleName());
+	}
 
 	/**
 	 * Sets the data source this repository will use to load accounts.

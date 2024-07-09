@@ -12,6 +12,8 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 
@@ -25,8 +27,10 @@ import org.springframework.stereotype.Repository;
  * cache should be populated on initialization and cleared on destruction.
  */
 
-@Repository("restaurantRepository")
+@Repository
 public class JdbcRestaurantRepository implements RestaurantRepository {
+
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private DataSource dataSource;
 
@@ -36,19 +40,15 @@ public class JdbcRestaurantRepository implements RestaurantRepository {
 	 */
 	private Map<String, Restaurant> restaurantCache;
 
+	public JdbcRestaurantRepository() {
+		logger.info("Creating {}", getClass().getSimpleName());
+	}
+
 	/**
 	 * The constructor sets the data source this repository will use to load
 	 * restaurants. When the instance of JdbcRestaurantRepository is created, a
 	 * Restaurant cache is populated for read only access
 	 */
-
-	public JdbcRestaurantRepository(DataSource dataSource) {
-		this.dataSource = dataSource;
-		this.populateRestaurantCache();
-	}
-
-	public JdbcRestaurantRepository() {
-	}
 
 	@Autowired
 	public void setDataSource(DataSource dataSource) {
@@ -67,6 +67,7 @@ public class JdbcRestaurantRepository implements RestaurantRepository {
 
 	@PostConstruct
 	void populateRestaurantCache() {
+		logger.info("Loading restaurant cache");
 		restaurantCache = new HashMap<>();
 		String sql = "select MERCHANT_NUMBER, NAME, BENEFIT_PERCENTAGE from T_RESTAURANT";
 		Connection conn = null;
@@ -106,6 +107,7 @@ public class JdbcRestaurantRepository implements RestaurantRepository {
 				}
 			}
 		}
+		logger.info("Finished loading restaurant cache");
 	}
 
 	/**
@@ -131,6 +133,7 @@ public class JdbcRestaurantRepository implements RestaurantRepository {
 	 */
 	@PreDestroy
 	public void clearRestaurantCache() {
+		logger.info("Clearing restaurant cache");
 		restaurantCache.clear();
 	}
 

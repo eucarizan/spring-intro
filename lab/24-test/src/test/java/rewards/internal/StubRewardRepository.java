@@ -2,6 +2,8 @@ package rewards.internal;
 
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rewards.AccountContribution;
 import rewards.Dining;
 import rewards.RewardConfirmation;
@@ -11,6 +13,14 @@ import rewards.internal.reward.RewardRepository;
  * A dummy reward repository implementation.
  */
 public class StubRewardRepository implements RewardRepository {
+
+	/**
+	 * Constructor logs creation, so we know which repository we are using.
+	 */
+	public StubRewardRepository() {
+		Logger logger = LoggerFactory.getLogger(getClass());
+		logger.info("Creating {}", getClass().getSimpleName());
+	}
 
 	public RewardConfirmation confirmReward(AccountContribution contribution, Dining dining) {
 		return new RewardConfirmation(confirmationNumber(), contribution);

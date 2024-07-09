@@ -33,7 +33,7 @@ public class JdbcRestaurantRepositoryTests {
 	}
 
 	@AfterEach
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		// simulate the Spring bean destruction lifecycle:
 		repository.clearRestaurantCache();
 	}
@@ -42,7 +42,7 @@ public class JdbcRestaurantRepositoryTests {
 	public void findRestaurantByMerchantNumber() {
 		Restaurant restaurant = repository.findByMerchantNumber("1234567890");
 		assertNotNull(restaurant, "restaurant is null - check your repositories cache");
-		assertEquals("1234567890", restaurant.getNumber(),"number is wrong");
+		assertEquals("1234567890", restaurant.getNumber(),"merchant number is wrong");
 		assertEquals("AppleBees", restaurant.getName(), "name is wrong");
 		assertEquals(Percentage.valueOf("8%"), restaurant.getBenefitPercentage(), "benefitPercentage is wrong");
 	}

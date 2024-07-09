@@ -2,6 +2,7 @@ package rewards.internal;
 
 import common.money.MonetaryAmount;
 
+import org.junit.jupiter.api.DisplayName;
 import rewards.AccountContribution;
 import rewards.Dining;
 import rewards.RewardConfirmation;
@@ -12,8 +13,7 @@ import rewards.internal.reward.RewardRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for the RewardNetworkImpl application logic. Configures the implementation with stub repositories
@@ -41,6 +41,7 @@ public class RewardNetworkImplTests {
 	}
 
 	@Test
+	@DisplayName("test if reward computation and distribution works")
 	public void testRewardForDining() {
 		// create a new dining of 100.00 charged to credit card '1234123412341234' by merchant '123457890' as test input
 		Dining dining = Dining.createDining("100.00", "1234123412341234", "1234567890");
@@ -65,8 +66,11 @@ public class RewardNetworkImplTests {
 		// the total contribution amount should have been split into 2 distributions
 		assertEquals(2, contribution.getDistributions().size());
 
+		// the total contribution amount should have been split into 2 distributions
 		// each distribution should be 4.00 (as both have a 50% allocation)
-		assertEquals(MonetaryAmount.valueOf("4.00"), contribution.getDistribution("Annabelle").getAmount());
-		assertEquals(MonetaryAmount.valueOf("4.00"), contribution.getDistribution("Corgan").getAmount());
+		assertAll("distribution of reward",
+				() -> assertEquals(2, contribution.getDistributions().size()),
+				() -> assertEquals(MonetaryAmount.valueOf("4.00"), contribution.getDistribution("Annabelle").getAmount()),
+				() -> assertEquals(MonetaryAmount.valueOf("4.00"), contribution.getDistribution("Corgan").getAmount()));
 	}
 }
