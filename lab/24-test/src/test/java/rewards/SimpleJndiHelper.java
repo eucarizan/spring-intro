@@ -45,7 +45,7 @@ public class SimpleJndiHelper implements BeanFactoryPostProcessor {
 
             // Bind as a JNDI resource
             ic.rebind(REWARDS_DB_JNDI_PATH, ds);
-            logger.info("JNDI Resource '" + REWARDS_DB_JNDI_PATH + "' instanceof " + ds.getClass().getSimpleName());
+            logger.info("JNDI Resource '" + REWARDS_DB_JNDI_PATH + "' instanceof {}", ds.getClass().getSimpleName());
         } catch (NamingException ex) {
             logger.error("JNDI setup failed", ex);
             ex.printStackTrace();

@@ -21,7 +21,7 @@ public class LoggingBeanPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        // Log the names and types of all non inner-beanse created
+        // Log the names and types of all non inner-beans created
         if (!beanName.contains("inner bean")) {
             logger.info("NEW {} -> {}", bean.getClass().getSimpleName(), beanName);
         }
